@@ -1,0 +1,15 @@
+language: python
+
+services:
+  - docker
+
+install:
+  - docker build -t test_web_app .
+  - docker run -d -p 127.0.0.1:80:80 --name test_web_app test_web_app
+
+before_script:
+  - pip install requests
+
+script:
+  - docker ps | grep -q test_web_app
+  - python tests.py
