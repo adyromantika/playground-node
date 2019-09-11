@@ -1,0 +1,20 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "application.name" . }}-service
+  namespace: {{ .Values.kubernetes.namespace }}
+  labels:
+    app: {{ template "application.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  selector:
+    app: {{ template "application.name" . }}
+  ports:
+    - protocol: TCP
+      port: 8080
+      name: web
+      targetPort: 8080
+  type: {{ .Values.service.serviceType }}

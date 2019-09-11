@@ -1,0 +1,18 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "application.name" . }}-ingress
+  namespace: {{ .Values.kubernetes.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+
+spec:
+  rules:
+  - host: {{ .Values.ingress.hostname }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ template "application.name" . }}-service
+          servicePort: 8080

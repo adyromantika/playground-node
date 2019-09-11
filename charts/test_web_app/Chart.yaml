@@ -1,0 +1,11 @@
+---
+name: test_web_app
+version: 0.1
+appVersion: 1.0.0
+description: A sample web app using Node.js
+keywords:
+  - node
+sources:
+  - https://github.com/adyromantika/playground-node
+maintainers:
+  - name: adyromantika

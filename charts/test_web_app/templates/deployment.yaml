@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: {{ template "application.name" . }}-deployment
+  namespace: kube-system
+  labels:
+    app: {{ template "application.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.application.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "application.name" . }}
+  template:
+    metadata:
+      labels:
+        name: {{ template "application.name" . }}
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: "{{ .Values.application.image.repository }}:{{ .Values.application.image.tag }}"
+        imagePullPolicy: "{{ .Values.application.image.pullPolicy }}"
+        name: {{ template "application.name" . }}
+        args:
+        - --api
+        - --kubernetes
