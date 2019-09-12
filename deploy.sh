@@ -9,4 +9,6 @@ cd charts
 
 sed -iE "s/%TAG%/${TAG}/" test-web-app/values.yaml
 
-helm upgrade test-web-app test-web-app -i -f test-web-app/values.yaml
+if [ ${DEPLOY} -eq 1 ]; then
+  helm upgrade test-web-app test-web-app -i -f test-web-app/values.yaml
+fi

@@ -8,6 +8,7 @@ env:
   global:
     - COMMIT=${TRAVIS_COMMIT::8}
     - REPO=adyromantika/test-web-app
+    - DEPLOY=0
 
 # Build the docker image and run it
 install:
@@ -24,6 +25,7 @@ before_script:
 script:
   - docker ps | grep -q test-web-app
   - python tests.py
+  - bash deploy.sh
   - helm template charts/test-web-app
 
 after_success:
