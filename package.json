@@ -1,5 +1,5 @@
 {
-  "name": "test_web_app",
+  "name": "test-web-app",
   "version": "1.0.0",
   "description": "Node.js application on Docker",
   "author": "Ady Romantika <ady.romantika@gmail.com>",

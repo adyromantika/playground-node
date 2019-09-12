@@ -17,4 +17,3 @@ spec:
       port: 8080
       name: web
       targetPort: 8080
-  type: {{ .Values.service.serviceType }}
