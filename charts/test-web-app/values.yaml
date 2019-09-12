@@ -11,7 +11,7 @@ application:
   name: test-web-app
   image:
     repository: adyromantika/test-web-app
-    tag: %REV%
+    tag: %TAG%
     pullPolicy: IfNotPresent
 
   # Number of pods to create.
