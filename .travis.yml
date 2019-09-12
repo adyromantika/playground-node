@@ -4,10 +4,15 @@ language: python
 services:
   - docker
 
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - REPO=adyromantika/test-web-app
+
 # Build the docker image and run it
 install:
-  - docker build -t test-web-app .
-  - docker run -d -p 127.0.0.1:80:8080 --name test-web-app test-web-app
+  - docker build -t $REPO:$COMMIT .
+  - docker run -d -p 127.0.0.1:80:8080 --name test-web-app $REPO:$COMMIT
 
 # Pre-requisite for the python test
 before_script:
@@ -20,3 +25,9 @@ script:
   - docker ps | grep -q test-web-app
   - python tests.py
   - helm template charts/test-web-app
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker push $REPO
